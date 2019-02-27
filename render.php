@@ -16,6 +16,12 @@ class Log {
 
         echo $message;
 
+        if ( 0 === strlen( trim( $message ) ) ) {
+
+            return $this;
+
+        }
+
         file_put_contents(
 
             $this->path,
