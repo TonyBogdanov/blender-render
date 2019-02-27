@@ -61,7 +61,7 @@
             .then( json => {
 
                 setTimeout( query_logs, 5000 );
-                
+
                 const hash = json.shift();
                 const logs = json.shift();
 
@@ -88,12 +88,12 @@
                     $button.type = 'button';
                     $button.textContent = date;
 
-                    $button.addEventListener(
+                    $button.addEventListener( 'click', ( ( $button, date ) => () => {
 
-                        'click',
-                        ( date => () => query_log( './log.php?log=' + logs[ date ] ) )( date )
+                        $button.disabled = true;
+                        query_log( './log.php?log=' + logs[ date ] );
 
-                    );
+                    } )( $button, date ) );
 
                     $logs.appendChild( $button );
 
