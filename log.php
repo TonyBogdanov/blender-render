@@ -20,7 +20,7 @@ if ( ! isset( $log ) ) {
 
     krsort( $logs );
 
-    echo json_encode( $logs );
+    echo json_encode( [ md5( json_encode( $logs ) ), $logs ] );
     exit;
 
 }

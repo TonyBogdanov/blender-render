@@ -270,6 +270,8 @@ function render( $device, Log $log ) {
 
     $process->stop();
 
+    $log->writeln( 'Log end.' );
+
     return true;
 
 }

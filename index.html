@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<p id="logs"></p>
+<p id="logs" data-hash=""></p>
 <pre id="log"></pre>
 
 <script>
@@ -35,7 +35,7 @@
 
     }
 
-    function query( url, after ) {
+    function query_log( url, after ) {
 
         fetch( url + ( after ? '&after=' + after : '' ) )
             .then( response => response.json() )
@@ -46,38 +46,65 @@
 
                 logs.map( log => add_log( ...log ) );
 
-                setTimeout( () => query( url, time ), 1000 );
+                setTimeout( () => query_log( url, time ), 1000 );
 
             } );
 
     }
 
-    fetch( './log.php' )
-        .then( response => response.json() )
-        .then( logs => {
+    function query_logs() {
 
-            for ( let date in logs ) {
+        const current_hash = $logs.dataset.hash;
 
-                if ( ! logs.hasOwnProperty( date ) ) {
+        fetch( './log.php' )
+            .then( response => response.json() )
+            .then( json => {
 
-                    continue;
+                const hash = json.shift();
+                const logs = json.shift();
+
+                if ( hash === current_hash ) {
+
+                    setTimeout( query_logs, 5000 );
+                    return;
 
                 }
 
-                const $button = document.createElement( 'button' );
+                $logs.dataset.hash = hash;
 
-                $button.type = 'button';
-                $button.textContent = date;
+                $logs.innerHTML = '';
 
-                $button.addEventListener( 'click', ( date => () => query( './log.php?log=' + logs[ date ] ) )( date ) );
+                for ( let date in logs ) {
 
-                $logs.appendChild( $button );
+                    if ( ! logs.hasOwnProperty( date ) ) {
 
-            }
+                        continue;
 
-            $logs.querySelector( 'button' ).click();
+                    }
 
-        } );
+                    const $button = document.createElement( 'button' );
+
+                    $button.type = 'button';
+                    $button.textContent = date;
+
+                    $button.addEventListener(
+
+                        'click',
+                        ( date => () => query_log( './log.php?log=' + logs[ date ] ) )( date )
+
+                    );
+
+                    $logs.appendChild( $button );
+
+                }
+
+                $logs.querySelector( 'button' ).click();
+
+            } );
+
+    }
+
+    document.addEventListener( 'DOMContentLoaded', query_logs );
 </script>
 </body>
 </html>
