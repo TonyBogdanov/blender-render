@@ -47,7 +47,7 @@ while ( ! feof( $fp ) ) {
 
     $message = fread( $fp, $length );
 
-    if ( $time >= $after ) {
+    if ( $time > $after ) {
 
         $result[] = [
 
