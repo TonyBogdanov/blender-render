@@ -5,3 +5,5 @@ git pull origin master
 cp index.html /var/www/html
 cp render.php /var/www/html
 cp log.php /var/www/html
+
+rm /var/www/html/sheepit/cache/log-*.log
