@@ -60,12 +60,13 @@
             .then( response => response.json() )
             .then( json => {
 
+                setTimeout( query_logs, 5000 );
+                
                 const hash = json.shift();
                 const logs = json.shift();
 
                 if ( hash === current_hash ) {
 
-                    setTimeout( query_logs, 5000 );
                     return;
 
                 }
