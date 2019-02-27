@@ -20,6 +20,8 @@
 <pre id="log"></pre>
 
 <script>
+    let log_url = '';
+
     const $logs = document.getElementById( 'logs' );
     const $log = document.getElementById( 'log' );
 
@@ -37,9 +39,15 @@
 
     }
 
-    function query_log( url, after ) {
+    function query_log( after ) {
 
-        fetch( url + ( after ? '&after=' + after : '' ) )
+        if ( 0 === log_url.length ) {
+
+            return;
+
+        }
+
+        fetch( log_url + ( after ? '&after=' + after : '' ) )
             .then( response => response.json() )
             .then( json => {
 
@@ -48,7 +56,7 @@
 
                 logs.map( log => add_log( ...log ) );
 
-                setTimeout( () => query_log( url, time ), 1000 );
+                setTimeout( () => query_log( time ), 1000 );
 
             } );
 
@@ -101,7 +109,9 @@
 
                         $button.disabled = true;
 
-                        query_log( './log.php?log=' + logs[ date ] );
+                        log_url = './log.php?log=' + logs[ date ];
+
+                        query_log();
 
                     } )( $button, date ) );
 
