@@ -20,6 +20,6 @@ rm composer-setup.php
 
 ./update.sh
 
-echo "@reboot cd /var/www/html && ~/blender-render/update.sh && nohup php render.php \"${username}\" \"${password}\" &" > cron
+echo "@reboot cd ~/blender-render && ./update.sh && cd /var/www/html && nohup php render.php \"${username}\" \"${password}\" &" > cron
 crontab cron
 rm cron
