@@ -16,7 +16,8 @@ class Log {
 
         echo $message;
 
-        if ( 0 === strlen( trim( $message ) ) ) {
+        $message = trim( $message );
+        if ( 0 === strlen( $message ) ) {
 
             return $this;
 
