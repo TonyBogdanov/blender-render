@@ -8,7 +8,7 @@ class Log {
 
     public function __construct() {
 
-        $this->path = DIR . '/cache/log-' . microtime( true ) . '.log';
+        $this->path = DIR . '/cache/log-' . time() . '.log';
 
     }
 
