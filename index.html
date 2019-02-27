@@ -3,8 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Blender Render</title>
+    <style>
+        #logs button { margin: 0.25rem 0; }
+        #logs button + button { margin-left: 0.5rem; }
+        #log { color: #fff; background: #555; border-radius: 3px; padding: 3px 0; }
+        #log p { position: relative; font-size: 15px; padding: 0.5rem 5.5rem 0.5rem 0.5rem; margin: 1px 0; }
+        #log p:nth-child(even) { background: rgba( 255, 255, 255, 0.035 ); }
+        #log p span { position: absolute; top: 8px; right: 0.5rem; font-size: 11px; color: #999; background: #eee; border-radius: 2px; padding: 2px;  }
+    </style>
 </head>
 <body>
 
+<p id="logs"></p>
+<pre id="log"></pre>
+
+<script>
+    const $logs = document.getElementById( 'logs' );
+    const $log = document.getElementById( 'log' );
+
+    function add_log( time, message ) {
+
+        const $item = document.createElement( 'p' );
+        const $time = document.createElement( 'span' );
+
+        $time.innerText = time;
+
+        $item.textContent = message;
+        $item.appendChild( $time );
+
+        $log.prepend( $item );
+
+    }
+
+    function query( url, after ) {
+
+        fetch( url + ( after ? '&after=' + after : '' ) )
+            .then( response => response.json() )
+            .then( json => {
+
+                const time  = json.shift();
+                const logs  = json.shift();
+
+                logs.map( log => add_log( ...log ) );
+
+                setTimeout( () => query( url, time ), 1000 );
+
+            } );
+
+    }
+
+    fetch( './log.php' )
+        .then( response => response.json() )
+        .then( logs => {
+
+            for ( let date in logs ) {
+
+                if ( ! logs.hasOwnProperty( date ) ) {
+
+                    continue;
+
+                }
+
+                const $button = document.createElement( 'button' );
+
+                $button.type = 'button';
+                $button.textContent = date;
+
+                $button.addEventListener( 'click', ( date => () => query( './log.php?log=' + logs[ date ] ) )( date ) );
+
+                $logs.appendChild( $button );
+
+            }
+
+            $logs.querySelector( 'button' ).click();
+
+        } );
+</script>
 </body>
 </html>
