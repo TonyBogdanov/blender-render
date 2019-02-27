@@ -18,7 +18,9 @@ curl -sS https://getcomposer.org/installer -o composer-setup.php
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 rm composer-setup.php
 
+cp index.html /var/www/html
 cp render.php /var/www/html
+cp log.php /var/www/html
 
 echo "@reboot cd /var/www/html && nohup php render.php \"${username}\" \"${password}\" &" > cron
 crontab cron
