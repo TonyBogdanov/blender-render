@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Blender Render</title>
     <style>
-        #logs button { margin: 0.25rem 0; }
-        #logs button + button { margin-left: 0.5rem; }
-        #log { color: #fff; background: #555; border-radius: 3px; padding: 3px 0; }
+        #logs { margin: -0.25rem; }
+        #logs button { background: #eee; border: #ddd 1px solid; padding: 0.5rem; margin: 0.25rem; cursor: pointer; }
+        #logs button[disabled] { font-weight: 700; color: #fff; background: #00cae9; border-color: #00b9d8; }
+        #log { color: #fff; background: #555; border-radius: 3px; padding: 3px 0; margin: 0.5rem 0 0 0; }
         #log p { position: relative; font-size: 15px; padding: 0.5rem 5.5rem 0.5rem 0.5rem; margin: 1px 0; }
         #log p:nth-child(even) { background: rgba( 255, 255, 255, 0.035 ); }
         #log p span { position: absolute; top: 8px; right: 0.5rem; font-size: 11px; color: #999; background: #eee; border-radius: 2px; padding: 2px;  }
@@ -90,7 +91,14 @@
 
                     $button.addEventListener( 'click', ( ( $button, date ) => () => {
 
+                        for ( const $item of $logs.querySelectorAll( 'button' ) ) {
+
+                            $item.disabled = false;
+
+                        }
+
                         $button.disabled = true;
+
                         query_log( './log.php?log=' + logs[ date ] );
 
                     } )( $button, date ) );
