@@ -127,7 +127,7 @@ function check_config( $device, $username, $password ) {
 
             $config .= 'compute-method=GPU' . PHP_EOL;
             $config .= 'compute-gpu=' . $device . PHP_EOL;
-            $config .= 'tile-size=120' . PHP_EOL;
+            $config .= 'tile-size=240' . PHP_EOL;
 
         } else {
 
@@ -242,6 +242,7 @@ function render( $device, Log $log ) {
             '-jar', DIR . '/sheepit.jar',
             '-ui', 'text',
             '-config', DIR . '/sheepit.conf',
+			'--verbose',
 
         ],
         DIR,
