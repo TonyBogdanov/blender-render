@@ -242,7 +242,6 @@ function render( $device, Log $log ) {
             '-jar', DIR . '/sheepit.jar',
             '-ui', 'text',
             '-config', DIR . '/sheepit.conf',
-			'--verbose',
 
         ],
         DIR,
