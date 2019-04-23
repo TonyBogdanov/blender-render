@@ -264,7 +264,8 @@ function render( $device, Log $log ) {
 
         }
 
-        return preg_match( '/no job available\. sleeping for/i', $output );
+        return preg_match( '/no job available\. sleeping for/i', $output ) ||
+		       preg_match( '/will try another project in a few minutes/i', $output );
 
     } );
 
