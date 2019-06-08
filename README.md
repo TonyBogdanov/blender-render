@@ -1,4 +1,4 @@
-Quick-and-easy SheepIT renderer for Ubuntu VM setup.
+Quick-and-Easy SheepIT renderer for Ubuntu VM setup.
 
 # Install
 
