@@ -14,7 +14,7 @@ apt-get install -y software-properties-common
 add-apt-repository ppa:ondrej/php -y
 apt-get update
 apt-get upgrade -y
-apt-get install -y curl default-jre apache2 php7.2 php-zip
+apt-get install -y curl default-jre apache2 php7.3 php7.3-zip
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 rm composer-setup.php
